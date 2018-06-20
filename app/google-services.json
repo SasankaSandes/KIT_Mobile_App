@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "715230902142",
+    "firebase_url": "https://kit-web-app.firebaseio.com",
+    "project_id": "kit-web-app",
+    "storage_bucket": "kit-web-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715230902142:android:ab72469a51dfa01d",
+        "android_client_info": {
+          "package_name": "lk.sasadev.kitapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715230902142-v5uuno55vc3onkokc1m503oi49mv3dko.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "715230902142-v5uuno55vc3onkokc1m503oi49mv3dko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDS9XpbnrE8PEJHRc4crWYTRDV3AG1WeKY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

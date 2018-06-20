@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- "Mark Favorite", should appear as action button if possible -->
+    <item
+        android:id="@+id/action_day_night"
+        android:icon="@drawable/ic_sun_white"
+        android:title="Day and night switch"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_bluetooth"
+        android:icon="@drawable/ic_bluetooth_white_36dp"
+        android:title="Day and night switch"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_schedule"
+        android:icon="@drawable/ic_schedule_white_36dp"
+        android:title="Day and night switch"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_warning"
+        android:icon="@drawable/ic_error_outline_white_36dp"
+        android:title="Day and night switch"
+        app:showAsAction="ifRoom"/>
+
+
+</menu>
