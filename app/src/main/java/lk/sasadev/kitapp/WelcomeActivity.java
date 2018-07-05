@@ -1,5 +1,6 @@
 package lk.sasadev.kitapp;
 
+import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -9,6 +10,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -26,10 +32,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_welcome);
 
-        SharedPreferences userLoginPreferences = PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this);
-        SharedPreferences.Editor spEditor = userLoginPreferences.edit();
-
-        Boolean isLoggedIn = userLoginPreferences.getBoolean("isLoggedIn", false);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        boolean isLoggedIn = false;
+        if(user != null){
+            isLoggedIn = true;
+        }
 
         if(isLoggedIn){
             new Handler().postDelayed(new Runnable() {

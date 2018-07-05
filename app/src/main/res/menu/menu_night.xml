@@ -22,6 +22,10 @@
         android:icon="@drawable/ic_error_outline_white_36dp"
         android:title="Day and night switch"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_logout"
+        android:title="Log Out"
+        app:showAsAction="collapseActionView"/>
 
 
 </menu>

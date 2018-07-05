@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothProfile;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +18,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.pires.obd.enums.AvailableCommandNames;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class DashBoardActivity extends AppCompatActivity {
 
+    FirebaseAuth firebaseAuth;
+    public Map<String, String> commandResult = new HashMap<String, String>();
+    LinearLayout vv;
+    private boolean isServiceBound;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,6 +39,8 @@ public class DashBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dash_board);
 
         setFontFaces();
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
 
 
@@ -98,6 +108,14 @@ public class DashBoardActivity extends AppCompatActivity {
                 return true;
             case R.id.action_warning:
                 return true;
+            case R.id.action_logout:
+                //use firebase auth to sign out
+                firebaseAuth.signOut();
+                //intent to login activity after log out
+                Intent i = new Intent(DashBoardActivity.this,LogInActivity.class);
+                startActivity(i);
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -111,4 +129,40 @@ public class DashBoardActivity extends AppCompatActivity {
     }
 
 
+    /*@Override
+    public void stateUpdate(ObdCommandJob job) {
+        final String cmdName = job.getCommand().getName();
+        String cmdResult = "";
+        final String cmdID = LookUpCommand(cmdName);
+        vv = (LinearLayout) findViewById(R.id.vehicle_view);
+
+        if (job.getState().equals(ObdCommandJob.ObdCommandJobState.EXECUTION_ERROR)) {
+            cmdResult = job.getCommand().getResult();
+            if (cmdResult != null && isServiceBound) {
+                obdStatusTextView.setText(cmdResult.toLowerCase());
+            }
+        } else if (job.getState().equals(ObdCommandJob.ObdCommandJobState.BROKEN_PIPE)) {
+            if (isServiceBound)
+                stopLiveData();
+        } else if (job.getState().equals(ObdCommandJob.ObdCommandJobState.NOT_SUPPORTED)) {
+            cmdResult = getString(R.string.status_obd_no_support);
+        } else {
+            cmdResult = job.getCommand().getFormattedResult();
+            if(isServiceBound)
+                obdStatusTextView.setText(getString(R.string.status_obd_data));
+        }
+
+        if (vv.findViewWithTag(cmdID) != null) {
+            TextView existingTV = (TextView) vv.findViewWithTag(cmdID);
+            existingTV.setText(cmdResult);
+        } else addTableRow(cmdID, cmdName, cmdResult);
+        commandResult.put(cmdID, cmdResult);
+    }*/
+
+    public static String LookUpCommand(String txt) {
+        for (AvailableCommandNames item : AvailableCommandNames.values()) {
+            if (item.getValue().equals(txt)) return item.name();
+        }
+        return txt;
+    }
 }

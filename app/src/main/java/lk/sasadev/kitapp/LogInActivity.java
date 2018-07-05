@@ -1,33 +1,42 @@
 package lk.sasadev.kitapp;
 
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LogInActivity extends AppCompatActivity {
 
-    DatabaseReference driverDatabase;
+
     String email;
     String password;
-    String username;
-    Log log;
+    EditText emailText;
+    EditText passwordText;
+    Button loginButton;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
+    BroadcastReceiver internetConnectionBcr;
+    ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,54 +46,100 @@ public class LogInActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_log_in);
 
-        final EditText emailText = findViewById(R.id.editTextEmail);
-        final EditText passwordText = findViewById(R.id.editTextPassword);
-        Button loginButton = findViewById(R.id.buttonLogIn);
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        emailText = findViewById(R.id.editTextEmail);
+        passwordText = findViewById(R.id.editTextPassword);
+        loginButton = findViewById(R.id.buttonLogIn);
+        progressBar = findViewById(R.id.loginProgressBar);
+        progressBar.setVisibility(View.GONE);
+
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        checkInternetConnection();
+
+        currentUser = firebaseAuth.getCurrentUser();
+        if(currentUser != null){
+            Toast.makeText(getApplicationContext(),"user already signed in as " + currentUser.getEmail(), Toast.LENGTH_LONG).show();
+            Intent i = new Intent(LogInActivity.this,DashBoardActivity.class);
+            startActivity(i);
+            finish();
+        }
+        //use current user  check not null  set things according to user
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(emailText!=null && passwordText!=null){
-                    Log.e("debug", "a");
-                    email = emailText.toString();
-                    password =passwordText.toString();
-                    driverDatabase.orderByChild("Email").equalTo(email).addChildEventListener(new ChildEventListener() {
+            public void onClick(View view) {
 
-                        @Override
-                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                            username = dataSnapshot.getKey();
-                            Log.e("debug", "a");
-                            Toast.makeText(LogInActivity.this, "User found :", Toast.LENGTH_LONG).show();
+                email = emailText.getText().toString().trim();
+                password = passwordText.getText().toString().trim();
 
-                        }
-
-                        @Override
-                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-
-
-                    });
-
-
+                hideKeyboard(view);
+                if (validation(email,password)){
+                    loginButton.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+                    loginUser(email,password);
                 }
+
             }
         });
+    }
+
+    private void hideKeyboard(View view) {
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(internetConnectionBcr);
+    }
+
+    private void checkInternetConnection() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(LogInActivity.this);
+        builder.setMessage("Please turn on mobile data or Wifi")
+                .setTitle("No Internet Connection");
+        final AlertDialog dialog = builder.create();
+
+        internetConnectionBcr = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo ni = manager.getActiveNetworkInfo();
+
+                if(ni!=null && ni.isConnectedOrConnecting() && dialog.isShowing()){
+                    dialog.dismiss();
+                }
+                if(ni == null || !ni.isConnectedOrConnecting()){
+                    dialog.show();
+                }
+            }
+        };
+
+        registerReceiver(internetConnectionBcr, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        /*ConnectivityManager connectivityManager= (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();*/
+
+
+
+        /*if(!isConnected) {
+            dialog.show();
+        }
+        if(isConnected){
+            dialog.dismiss();
+        }*/
 
     }
 
@@ -103,10 +158,49 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    public boolean validation(String email, String password){
+        boolean b=true;
+        if(email.equals("")){
+            emailText.setError("please enter your email!");
+            emailText.requestFocus();
+            b = false;
+        }
 
-        driverDatabase = FirebaseDatabase.getInstance().getReference("Driver");
+        if(password.equals("")) {
+            passwordText.setError("please enter password!");
+            emailText.requestFocus();
+            b = false;
+        }
+        /*if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailText.setError("please enter a valid email!");
+            emailText.requestFocus();
+            b = false;
+        }*/
+        return b;
+        };
+
+    public void loginUser(String email, String password){
+        firebaseAuth.signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            currentUser = firebaseAuth.getCurrentUser();
+                            Toast.makeText(getApplicationContext(),"user successfully signed in" + currentUser.getEmail(), Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(LogInActivity.this,DashBoardActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(),"failed to sign in", Toast.LENGTH_LONG).show();
+                        }
+                        if(task.isComplete()){
+                            loginButton.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
     }
-}
+
+
+    }

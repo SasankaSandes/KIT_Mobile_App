@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegistrationActivity1"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/backgroundColor">
 
 
 
@@ -31,7 +32,7 @@
         android:layout_marginBottom="16dp"/>
 
     <EditText
-        android:id="@+id/editTextFirstName"
+        android:id="@+id/regTextFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -41,10 +42,11 @@
         android:padding="10dp"
         android:textColor="?attr/textPrimaryColor"
         android:textSize="16sp"
-        android:hint="First Name"/>
+        android:hint="First Name"
+        android:textColorHint="?attr/textSecondaryColor"/>
 
     <EditText
-        android:id="@+id/editTextLastName"
+        android:id="@+id/regTextLastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -54,9 +56,11 @@
         android:padding="10dp"
         android:textColor="?attr/textPrimaryColor"
         android:textSize="16sp"
-        android:hint="Last Name"/>
+        android:hint="Last Name"
+        android:textColorHint="?attr/textSecondaryColor"/>
+
     <EditText
-        android:id="@+id/editTextEmail"
+        android:id="@+id/regTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -66,10 +70,11 @@
         android:padding="10dp"
         android:textColor="?attr/textPrimaryColor"
         android:textSize="16sp"
-        android:hint="Email"/>
+        android:hint="Email"
+        android:textColorHint="?attr/textSecondaryColor"/>
 
     <EditText
-        android:id="@+id/editTextPassword"
+        android:id="@+id/regTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -79,10 +84,11 @@
         android:padding="10dp"
         android:textColor="?attr/textPrimaryColor"
         android:textSize="16sp"
-        android:hint="Password"/>
+        android:hint="Password"
+        android:textColorHint="?attr/textSecondaryColor"/>
 
     <EditText
-        android:id="@+id/editTextConfirmPassword"
+        android:id="@+id/regTextConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -92,10 +98,11 @@
         android:padding="10dp"
         android:textColor="?attr/textPrimaryColor"
         android:textSize="16sp"
-        android:hint="Confirm Password"/>
+        android:hint="Confirm Password"
+        android:textColorHint="?attr/textSecondaryColor"/>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/reg1ButtonNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -104,5 +111,11 @@
         android:text="Next"
         android:textAllCaps="false"
         android:textColor="?attr/textPrimaryColor"
-        />
+        android:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/reg1ProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

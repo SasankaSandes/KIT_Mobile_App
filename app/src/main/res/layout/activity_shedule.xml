@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ScheduleActivity"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:background="?attr/backgroundColor">
 
     <FrameLayout
@@ -20,118 +20,91 @@
             android:layout_height="match_parent"
             />
 
-        <EditText
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:background="?attr/textHighlightColor"
-            android:textColor="?attr/textPrimaryColor"
-            android:textSize="16sp"
-            android:paddingLeft="16dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:paddingRight="16dp"
-            android:text="Search Garage"/>
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal">
+
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:background="?attr/textHighlightColor"/>
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:background="?attr/textHighlightColor">
+
+                <TextView
+
+                    android:id="@+id/textViewDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Date"
+                    android:textSize="16sp"
+                    android:layout_marginStart="8dp"
+                    android:textColor="?attr/textPrimaryColor"/>
+
+                <Button
+                    android:id="@+id/buttonDatePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Pick Date"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:background="?attr/textHighlightColor">
+
+                <TextView
+                    android:id="@+id/textViewTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Time"
+                    android:textSize="16sp"
+                    android:layout_marginStart="8dp"
+                    android:textColor="?attr/textPrimaryColor"/>
+
+                <Button
+                    android:id="@+id/buttonTimePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Pick Time"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save Schedule"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:layout_gravity="center_horizontal"/>
+
+
+        </LinearLayout>
 
 
     </FrameLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="Selected Garage"
-            android:paddingLeft="8dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:textSize="16sp"
-            android:background="?attr/textHighlightColor"
-            android:textColor="?attr/textPrimaryColor"/>
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:paddingLeft="8dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="4dp"
-            android:background="?attr/textHighlightColor">
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Date"
-                android:textSize="16sp"
-                android:layout_marginStart="8dp"
-                android:textColor="?attr/textPrimaryColor"/>
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Pick Date"
-                android:textSize="12sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="4dp"
-            android:background="?attr/textHighlightColor">
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Time"
-                android:textSize="16sp"
-                android:layout_marginStart="8dp"
-                android:textColor="?attr/textPrimaryColor"/>
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Pick Time"
-                android:textSize="12sp"/>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save Schedule"
-            android:layout_margin="16dp"
-            android:textSize="12sp"
-            android:layout_gravity="center_horizontal"/>
-
-    </LinearLayout>
-
 
 </LinearLayout>
+
+

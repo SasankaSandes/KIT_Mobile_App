@@ -15,8 +15,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "715230902142-v5uuno55vc3onkokc1m503oi49mv3dko.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "715230902142-s2um05349t3g5qfphhdsu4sjpvspqm18.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lk.sasadev.kitapp",
+            "certificate_hash": "315a638d1fb4fcaf2806382694729ea3397d63b6"
+          }
         },
         {
           "client_id": "715230902142-v5uuno55vc3onkokc1m503oi49mv3dko.apps.googleusercontent.com",
@@ -33,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715230902142-v5uuno55vc3onkokc1m503oi49mv3dko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

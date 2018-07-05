@@ -32,7 +32,8 @@
         android:padding="10dp"
         android:layout_margin="8dp"
         android:textSize="16sp"
-        android:hint="Email"/>
+        android:hint="Email"
+        android:textColorHint="?attr/textSecondaryColor"/>
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -45,7 +46,8 @@
         android:padding="10dp"
         android:layout_margin="8dp"
         android:textSize="16sp"
-        android:hint="Password"/>
+        android:hint="Password"
+        android:textColorHint="?attr/textSecondaryColor"/>
 
     <Button
         android:id="@+id/buttonLogIn"
@@ -58,6 +60,12 @@
         android:layout_gravity="center_horizontal"
         android:textAllCaps="false"/>
 
+    <ProgressBar
+        android:id="@+id/loginProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/buttonRegister"
         style="?android:attr/borderlessButtonStyle"
@@ -65,8 +73,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32sp"
         android:background="?attr/backgroundColor"
+        android:onClick="goToRegistrationActivity"
         android:text="New to KIT? Click to Sign Up.."
         android:textAllCaps="false"
-        android:textColor="@color/colorAccent"
-        android:onClick="goToRegistrationActivity"/>
+        android:textColor="@color/colorAccent" />
+
 </LinearLayout>

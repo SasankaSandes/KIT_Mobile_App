@@ -51,6 +51,7 @@ public class BluetoothSettingsActivity extends AppCompatActivity {
     BluetoothDevice remoteBtDevice;
     boolean search = true;
 
+
     UUID uuid= UUID.fromString("0000110E-0000-1000-8000-00805F9B34FB");
 
 
@@ -380,6 +381,7 @@ public class BluetoothSettingsActivity extends AppCompatActivity {
             }
         }
     }
+
 }
 
 
